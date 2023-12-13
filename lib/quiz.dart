@@ -3,6 +3,10 @@ import 'package:psychalyzergpt/reports.dart';
 import 'parentdashb.dart';
 
 class QuizPage extends StatefulWidget {
+  final Function(List<Map<String, dynamic>>) onQuizCompleted;
+
+  const QuizPage({Key? key, required this.onQuizCompleted}) : super(key: key);
+
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -104,17 +108,30 @@ class _QuizPageState extends State<QuizPage> {
     },
     // Add more questions here
   ];
-
   void _selectOption(int questionIndex, String option) {
     setState(() {
       _selectedOptions[questionIndex] = option;
-      _currentQuestion++;
     });
 
-    if (_currentQuestion == _questions.length) {
+    if (_currentQuestion < _questions.length - 1) {
+      setState(() {
+        _currentQuestion++;
+      });
+    } else {
+      List<Map<String, dynamic>> _getQuizData() {
+        List<Map<String, dynamic>> quizData = [];
+        for (int i = 0; i < _questions.length; i++) {
+          quizData.add({
+            'question': _questions[i]['question'],
+            'user_answer': _selectedOptions[i],
+          });
+        }
+        return quizData;
+      }
+
       int totalScore = _calculateScore(_selectedOptions);
-      // Store the responses and totalScore in some storage (e.g., database)
-      // Then show a popup and navigate to the reports page with the data
+      widget.onQuizCompleted(_getQuizData());
+
       showDialog(
         context: context,
         builder: (_) => AlertDialog(

@@ -1,40 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:psychalyzergpt/counsellordashb.dart';
 import 'childlogin.dart';
-import 'childtest.dart'; // Import the ChildTest widget
+import 'childtest.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'loginpage.dart';
 
 final Color blueViolet = Color(0xFF8A2BE2);
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ChildDashboard(),
-    );
-  }
-}
-
 class ChildDashboard extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _logout(BuildContext context) async {
+    try {
+      await _auth.signOut();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginPage(),
+        ),
+      );
+    } catch (e) {
+      print('Logout error: $e');
+      // Handle logout error if needed
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Psychalyzer'),
-        automaticallyImplyLeading: false,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChildLoginPage(),
-                ),
-              );
+              _logout(context);
             },
           ),
         ],
+        automaticallyImplyLeading: false,
       ),
       body: Stack(
         children: <Widget>[

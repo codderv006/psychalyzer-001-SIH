@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:psychalyzergpt/prntloginpage.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'loginpage.dart';
+import 'firebase_service.dart';
 import 'chatbot.dart';
 import 'quiz.dart'; // Import the QuizPage
 
@@ -19,13 +19,31 @@ class MyApp extends StatelessWidget {
 }
 
 class ParentDashboard extends StatelessWidget {
+  final FirebaseService _firebaseService = FirebaseService();
+
   void navigateToQuiz(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => QuizPage(),
+        builder: (context) => QuizPage(onQuizCompleted: onQuizCompleted),
       ),
     );
+  }
+
+  void onQuizCompleted(List<Map<String, dynamic>> quizData) async {
+    try {
+      // Get the user ID
+      String userId = await _firebaseService.getUserId() ?? '';
+
+      // Save quiz responses to Firebase
+      await _firebaseService.saveQuizResponses(userId, quizData);
+
+      // Additional logic after saving the quiz responses
+      // For example, show a success message or navigate to another page
+    } catch (e) {
+      print('Error saving quiz responses: $e');
+      // Handle the error as needed
+    }
   }
 
   @override
@@ -41,7 +59,7 @@ class ParentDashboard extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => prntLoginPage(),
+                  builder: (context) => LoginPage(),
                 ),
               );
             },

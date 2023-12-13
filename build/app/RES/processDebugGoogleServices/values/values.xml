@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebase_database_url" translatable="false">https://sihfinal-131e7-default-rtdb.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">168001646065</string>
+    <string name="google_api_key" translatable="false">AIzaSyBHxWmgESc9OZ9PHkkWbNwSfFfXYvYxm90</string>
+    <string name="google_app_id" translatable="false">1:168001646065:android:e7badada3715d33988e850</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBHxWmgESc9OZ9PHkkWbNwSfFfXYvYxm90</string>
+    <string name="google_storage_bucket" translatable="false">sihfinal-131e7.appspot.com</string>
+    <string name="project_id" translatable="false">sihfinal-131e7</string>
+</resources>

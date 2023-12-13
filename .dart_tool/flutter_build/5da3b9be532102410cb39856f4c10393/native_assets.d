@@ -1,0 +1,1 @@
+ C:\\Users\\ASUS\\Desktop\\SIH23\\psychalyzer-001-SIH\\.dart_tool\\flutter_build\\5da3b9be532102410cb39856f4c10393\\native_assets.yaml: 
